@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-from PIL import Image
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ latitude = col1.text_input('latitude')
 longitude = col1.text_input('longitude')
 key = col1.text_input('API Key')
 url = 'http://127.0.0.1:8000/predict'
-API_PATH = 'https://deep-pv-vpmy6xoida-ew.a.run.app/'
+API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 params = {'latitude':latitude, 'longitude':longitude}
 scores_dict = requests.get(url, params=params)
