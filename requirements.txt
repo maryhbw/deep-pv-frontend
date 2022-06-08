@@ -12,7 +12,7 @@ geopandas
 #Front End
 streamlit
 requests
-matplotlib.pyplot
+matplotlib
 pydeck
 
 # tests/linter
