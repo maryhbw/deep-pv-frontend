@@ -15,7 +15,7 @@ st.set_page_config(layout="wide")
 col1, col2 = st.columns((4, 1))
 col2.header("Logs")
 col1.header("DEEP-PV")
-col1.markdown("Get solar panel stats from any place in the world. \n 1. Define location. \n 2. Add API key.")
+col1.markdown("Get solar panel stats from any place in the world. \n 1. Define location. \n 2. Add API key. ")
 
 clicked = col1.button('Click for heat map')
 kpi = col1.button('Generate KPIs')
