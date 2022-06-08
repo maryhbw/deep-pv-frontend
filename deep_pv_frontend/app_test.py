@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pydeck as pdk
 import numpy as np
+import json
 
 # @st.cache
 # predict all images to a bucket and return the stuff.
@@ -23,12 +24,16 @@ url = f'{API_PATH}/hood?'
 
 clicked = col1.button('Click for heat map')
 kpi = col1.button('Generate KPIs')
-params = {'latitude':latitude, 'longitude':longitude, 'size':2, 'key':key}
+params = {'latitude':latitude, 'longitude':longitude, 'key':key , 'size':1}
+with open("first_try.json") as jsonFile:
+    jsonObject = json.load(jsonFile)
+    jsonFile.close()
+scores_dict = jsonObject
 
 if kpi:
-    scores_dict = requests.get(url, params=params)
+    #scores_dict = requests.get(url, params=params)
     print(scores_dict)
-    scores_dict = scores_dict.json()['results']
+    scores_dict = scores_dict['results']
     print(len(scores_dict))
     # bucket_name = BUCKET_NAME
     # lats, lons, image_names = get_images_gcp(BUCKET_NAME, prefix = 'data/Rotterdam/PV Present/')
@@ -47,6 +52,7 @@ if kpi:
     total_energy_output = df['kWh_mon'].sum().round()
     total_num_PV = len(df)
     average_energy_output = df['kWh_mon'].mean().round()
+
 
 if clicked:
 
