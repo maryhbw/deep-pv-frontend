@@ -14,6 +14,7 @@ streamlit
 requests
 matplotlib
 pydeck
+plotly
 
 # API
 gcsfs

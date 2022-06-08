@@ -11,7 +11,7 @@ install_requirements:
 # ----------------------------------
 
 streamlit:
-	-@streamlit run app.py
+	-@streamlit run deep_pv_frontend/app.py
 
 heroku_login:
 	-@heroku login
