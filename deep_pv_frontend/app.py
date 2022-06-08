@@ -11,6 +11,8 @@ import requests
 st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
+default_lat = '51.927682071121296'
+default_lon = '4.46474167449461'
 
 #preloaded data
 with open("first_try.json") as jsonFile:
@@ -53,6 +55,8 @@ def get_custom_data():
     response = preloaded
     display_data(response)
 
+def interactive_map():
+    st.map()
 
 ######################## main interface ############
 
@@ -65,12 +69,17 @@ option = st.selectbox(
 
 if option == 'Custom':
     col1, col2 = st.columns(2)
-    st.write("To make a prediction, select a location and we'll calculate your KPIs!")
-    latitude = col1.text_input('latitude', '51.927682071121296')
-    longitude = col1.text_input('longitude', '4.46474167449461')
+    col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
+    latitude = col1.text_input('latitude', default_lat)
+    longitude = col1.text_input('longitude', default_lon)
     key = col1.text_input('API Key')
     kpi = col1.button('Generate KPIs')
-    params = {'latitude':latitude, 'longitude':longitude, 'key': key,}
+    params = {'latitude':latitude, 'longitude':longitude, 'key': key}
+
+    df = pd.DataFrame([[float(latitude), float(longitude)]],
+     columns=['lat', 'lon'])
+    col2.map(df)
+
     if kpi:
         get_custom_data()
 
@@ -83,10 +92,10 @@ with st.sidebar.expander(f"About"):
                  """)
 
 with st.sidebar.expander(f"What is deep learning?"):
-        st.write("""How should we know? We just folled the notebook!""")
+        st.write("""How should we know? We just followed the notebook!""")
 
 with st.sidebar.expander(f"How I can buy this data?"):
         st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
 
-with st.sidebar.expander(f"About"):
+with st.sidebar.expander(f"Team"):
         st.write("""Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
