@@ -7,8 +7,6 @@ import matplotlib.pyplot as plt
 import pydeck as pdk
 import numpy as np
 
-URL = 'http://127.0.0.1:8000/predict'
-
 # @st.cache
 # predict all images to a bucket and return the stuff.
 st.set_page_config(layout="wide")
@@ -23,14 +21,14 @@ kpi = col1.button('Generate KPIs')
 latitude = col1.text_input('latitude')
 longitude = col1.text_input('longitude')
 key = col1.text_input('API Key')
-url = 'http://127.0.0.1:8000/predict'
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 params = {'latitude':latitude, 'longitude':longitude}
-scores_dict = requests.get(url, params=params)
+
 
 
 if kpi:
+    scores_dict = requests.get(url, params=params)
     # bucket_name = BUCKET_NAME
     # lats, lons, image_names = get_images_gcp(BUCKET_NAME, prefix = 'data/Rotterdam/PV Present/')
     url = f'{API_PATH}/hood?'
