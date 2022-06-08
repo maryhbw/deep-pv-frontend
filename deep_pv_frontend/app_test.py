@@ -21,9 +21,10 @@ kpi = col1.button('Generate KPIs')
 latitude = col1.text_input('latitude')
 longitude = col1.text_input('longitude')
 key = col1.text_input('API Key')
+
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
-params = {'latitude':latitude, 'longitude':longitude}
+params = {'latitude':latitude, 'longitude':longitude, 'key': key,}
 
 
 
