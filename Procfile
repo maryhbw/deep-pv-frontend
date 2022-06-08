@@ -1,1 +1,1 @@
-web: pip install . -U && deep-pv-frontend-run
+web: sh setup.sh && streamlit run app.py
