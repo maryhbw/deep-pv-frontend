@@ -7,11 +7,11 @@ wheel>=0.29
 # data science
 numpy
 pandas
+geopandas
 
 #Front End
 streamlit
 requests
-PIL
 matplotlib.pyplot
 pydeck
 
