@@ -1,11 +1,10 @@
 import streamlit as st
 import requests
-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import pydeck as pdk
 import numpy as np
+import json
 
 # @st.cache
 # predict all images to a bucket and return the stuff.
@@ -15,8 +14,7 @@ col2.header("Logs")
 col1.header("DEEP-PV")
 col1.markdown("Get solar panel stats from any place in the world. \n 1. Define location. \n 2. Add API key. ")
 
-clicked = col1.button('Click for heat map')
-kpi = col1.button('Generate KPIs')
+
 
 latitude = col1.text_input('latitude')
 longitude = col1.text_input('longitude')
@@ -26,27 +24,39 @@ API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 params = {'latitude':latitude, 'longitude':longitude, 'key': key,}
 
+clicked = col1.button('Click for heat map')
+kpi = col1.button('Generate KPIs')
 
+
+with open("first_try.json") as jsonFile:
+    jsonObject = json.load(jsonFile)
+    jsonFile.close()
+scores_dict = jsonObject
 
 if kpi:
-    scores_dict = requests.get(url, params=params)
-    # bucket_name = BUCKET_NAME
-    # lats, lons, image_names = get_images_gcp(BUCKET_NAME, prefix = 'data/Rotterdam/PV Present/')
+    #scores_dict = requests.get(url, params=params)
     url = f'{API_PATH}/hood?'
-    params = {'latitude':latitude, 'longitude':longitude}
-    scores_dict = requests.get(url, params=params)
+    params = {'latitude':latitude, 'longitude':longitude, 'key':key , 'size':1}
+
+    print(scores_dict)
+    scores_dict = scores_dict['results']
+
+
+    #very basic plot
     fig, ax = plt.subplots(figsize=(6, 2))
     ax.hist(pd.DataFrame(scores_dict)['kWh_mon'].apply(round), bins = 20)
     plt.title("Distribution of power output per panel detected")
     plt.xlabel('kWh per Month output')
     plt.ylabel('Frequency')
     plt.show()
+
     col1.pyplot(fig)
 
     df = pd.DataFrame(scores_dict)
     total_energy_output = df['kWh_mon'].sum().round()
     total_num_PV = len(df)
     average_energy_output = df['kWh_mon'].mean().round()
+
 
 if clicked:
 
