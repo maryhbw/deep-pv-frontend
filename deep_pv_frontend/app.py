@@ -34,14 +34,14 @@ def display_data(results = preloaded):
     col2.metric(label = "Monthly energy (kwh)", value =total_energy_output)
     col3.metric(label = "Av. energy (kWh)", value =average_energy_output)
 
-    st.markdown(f"""\nThese panels are sufficient to supply
-                <span style="background-color:yellow">{int(total_energy_output / (2479/12))} households</span>
-                 in the Netherlands at an average of 2.479/kWh.
+    st.markdown(f"""These panels are sufficient to supply
+                **<span style="background-color:yellow">{int(total_energy_output / (2479/12))} households</span>**
+                **each month** in the Netherlands at an average of 2.479/kWh.
                 It also represents a monthly energy value of
-                <span style="background-color:yellow">{0.7 * total_energy_output}</span>
+                **<span style="background-color:yellow">{0.7 * total_energy_output}</span>**
                 Euro, at an average of
-                <span style="background-color:yellow">{0.7* average_energy_output}</span>
-                Euro per panel constellation""", unsafe_allow_html=True)
+                **<span style="background-color:yellow">{0.7* average_energy_output}</span>**
+                Euro per panel constellation.""", unsafe_allow_html=True)
 
     with st.expander(f"Distribution energy production panels"):
         st.bar_chart(pd.DataFrame(results)['kWh_mon'])
@@ -78,6 +78,15 @@ elif option == 'Rotterdam':
     st.write("Solar panel data analysed from Rotterdam on 20km2 in June 2019")
     display_data(results = preloaded)
 
-with st.expander(f"About"):
+with st.sidebar.expander(f"About"):
         st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.
-                 Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
+                 """)
+
+with st.sidebar.expander(f"What is deep learning?"):
+        st.write("""How should we know? We just folled the notebook!""")
+
+with st.sidebar.expander(f"How I can buy this data?"):
+        st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
+
+with st.sidebar.expander(f"About"):
+        st.write("""Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
