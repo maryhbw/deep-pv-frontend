@@ -15,6 +15,7 @@ requests
 matplotlib
 pydeck
 plotly
+seaborn
 
 # API
 gcsfs
