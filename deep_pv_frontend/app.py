@@ -12,10 +12,9 @@ import seaborn as sns
 st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
-default_lat = '51.927682071121296'
-default_lon = '4.46474167449461'
+default_lat = '36.807816370788494'
+default_lon = '-119.78978954999349'
 default_size = 3
-
 
 #preloaded data
 with open("first_try.json") as jsonFile:
