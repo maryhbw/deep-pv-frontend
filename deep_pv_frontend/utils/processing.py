@@ -2,6 +2,7 @@ import numpy as np
 from google.cloud import storage
 import pydeck as pdk
 import pandas as pd
+import plotly.express as px
 
 def make_map(bbs, points):
     """Display a map centered at the mean lat/lon of the query set."""
@@ -62,6 +63,18 @@ def scores_to_bb(scores):
         'geometry': s['bb_latlon'],
         'confidence': s['score']
         } for s in scores ]
+
+def plotly_map(scores):
+    scores = pd.DataFrame(scores['results'])
+    scores['count'] = 1
+    midpoint = (np.average(scores['lat']), np.average(scores['lon']))
+    center = {'lat': midpoint[0],'lon':midpoint[1]}
+    fig = px.density_mapbox(scores, lat='lat', lon='lon', z='count',
+                        mapbox_style="stamen-terrain", center = center, zoom = 12)
+#use groupby to transform data from wide to short for heatmap application
+    return fig
+def make_results(scores):
+    points = scores_to_points(scores)
 
 def predict_to_map(scores):
     bbs = scores_to_bb(scores)
