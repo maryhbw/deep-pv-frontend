@@ -8,6 +8,7 @@ def make_map(bbs, points):
     # Adding code so we can have map default to the center of the data
     bbs = pd.DataFrame(bbs)
     points = pd.DataFrame(points)
+    print(points)
     midpoint = (np.average(points.lat), np.average(points.lon))
 
     initial_view_state=pdk.ViewState(
