@@ -42,7 +42,7 @@ def make_map(bbs, points):
                 )
 
     #Create labeled map
-    labeled_map = pdk.Deck(layers=[layer1,layer2],
+    labeled_map = pdk.Deck(layers=[layer1],
                            initial_view_state=initial_view_state,
                            map_style='mapbox://styles/mapbox/satellite-v9')
     labeled_map.to_html('test.html')
