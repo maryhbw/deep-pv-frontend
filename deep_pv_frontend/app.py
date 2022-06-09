@@ -12,9 +12,9 @@ import seaborn as sns
 st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
-default_lat = '51.927682071121296'
-default_lon = '4.46474167449461'
-
+default_lat = '36.807816370788494'
+default_lon = '-119.78978954999349'
+default_size = 3
 
 #preloaded data
 with open("first_try.json") as jsonFile:
@@ -22,9 +22,7 @@ with open("first_try.json") as jsonFile:
     jsonFile.close()
 preloaded = jsonObject
 
-def display_data(preloaded):
-    print(len(preloaded))
-    results = preloaded['results']
+def display_data(results):
     df = pd.DataFrame(results)
     table_df = df[['name','lat', 'lon', 'area_correction', 'kWh_mon']]
     total_energy_output = df['kWh_mon'].sum().round()
@@ -62,11 +60,11 @@ def display_data(preloaded):
         st.dataframe(table_df)
 
 def get_custom_data():
-    # response = requests.get(url, params=params)['results']
-    results = preloaded['results']
+    response = requests.get(url, params=params).json()
+    results = response['results']
     map = predict_to_map(results)
     st.pydeck_chart(map)
-    display_data(preloaded)
+    display_data(results)
 
 def interactive_map():
     st.map()
@@ -86,9 +84,10 @@ if option == 'Custom':
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
     key = col1.text_input('API Key')
+    size = col1.slider('Map Size', 1, 9, default_size)
     kpi = col1.button('Generate KPIs')
-    ##API CALL HERE?
-    params = {'latitude':latitude, 'longitude':longitude, 'key': key}
+    params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+
     df = pd.DataFrame([[float(latitude), float(longitude)]],
      columns=['lat', 'lon'])
     col2.map(df)
@@ -98,9 +97,9 @@ if option == 'Custom':
 
 elif option == 'Rotterdam':
     st.write("Solar panel data analysed from Rotterdam on 20km2 in June 2019")
-    results = preloaded
+    results = preloaded['results']
     st.plotly_chart(plotly_map(scores = results),use_container_width=False, sharing="streamlit")
-    display_data(preloaded)
+    display_data(results)
 
 
 with st.sidebar.expander(f"About"):
@@ -114,9 +113,7 @@ with st.sidebar.expander(f"How I can buy this data?"):
         st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
 
 with st.sidebar.expander(f"Info for nerds"):
-        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
-        Mean Average Precision (mAP) cross-continent = +70 """)
-        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
+        st.write("""An [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
         Mean Average Precision (mAP) cross-continent = +70 """)
 
 with st.sidebar.expander(f"Team"):

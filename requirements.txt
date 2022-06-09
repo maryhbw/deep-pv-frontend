@@ -16,6 +16,7 @@ matplotlib
 pydeck
 json
 plotly
+seaborn
 
 # tests/linter
 black

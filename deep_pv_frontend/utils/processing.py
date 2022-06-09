@@ -9,6 +9,7 @@ def make_map(bbs, points):
     # Adding code so we can have map default to the center of the data
     bbs = pd.DataFrame(bbs)
     points = pd.DataFrame(points)
+    print(points)
     midpoint = (np.average(points.lat), np.average(points.lon))
 
     initial_view_state=pdk.ViewState(
@@ -43,7 +44,7 @@ def make_map(bbs, points):
                 )
 
     #Create labeled map
-    labeled_map = pdk.Deck(layers=[layer1,layer2],
+    labeled_map = pdk.Deck(layers=[layer1],
                            initial_view_state=initial_view_state,
                            map_style='mapbox://styles/mapbox/satellite-v9')
     labeled_map.to_html('test.html')
