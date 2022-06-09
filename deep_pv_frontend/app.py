@@ -7,6 +7,7 @@ import json
 from deep_pv_frontend.utils.processing import predict_to_map
 import plotly.figure_factory as ff
 import requests
+import seaborn as sns
 
 st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
@@ -47,8 +48,19 @@ def display_data(results = preloaded):
                 **<span style="background-color:#FFBF00">{0.7* average_energy_output}</span>**
                 Euro per panel constellation.""", unsafe_allow_html=True)
 
-    with st.expander(f"Distribution energy production panels"):
-        st.bar_chart(pd.DataFrame(results)['kWh_mon'])
+    with st.expander(f"Distribution of power output per panel detected"):
+        fig, ax = plt.subplots(figsize=(6, 3))
+        #set figure aesthetic
+        sns.set(rc={'axes.facecolor':'#ECF0F1', 'figure.facecolor':'white','patch.edgecolor': 'w', 'grid.linestyle': '--', 'ytick.left': True, 'grid.color': '#BDC3C7'})
+        sns.set_context("paper") #resolution of image
+        #plot elements
+        sns.histplot( data=pd.DataFrame(results)['kWh_mon'], bins = 10,  color = '#FFBF00')
+        #plt.title("Distribution of power output per panel detected", fontsize = 14)
+        plt.xlabel('kWh per month output', fontsize = 12)
+        plt.ylabel('Number of panels', fontsize = 12)
+        #display on streamlit
+        st.pyplot(fig)
+        # st.bar_chart(pd.DataFrame(results)['kWh_mon'])
     with st.expander(f"All analyzed solar panel data"):
         st.dataframe(table_df)
 
