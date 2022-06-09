@@ -14,6 +14,7 @@ url = f'{API_PATH}/hood?'
 default_lat = '51.927682071121296'
 default_lon = '4.46474167449461'
 
+
 #preloaded data
 with open("first_try.json") as jsonFile:
     jsonObject = json.load(jsonFile)
@@ -37,12 +38,12 @@ def display_data(results = preloaded):
     col3.metric(label = "Av. energy (kWh)", value =average_energy_output)
 
     st.markdown(f"""These panels are sufficient to supply
-                **<span style="background-color:yellow">{int(total_energy_output / (2479/12))} households</span>**
+                **<span style="background-color:#FFBF00">{int(total_energy_output / (2479/12))} households</span>**
                 **each month** in the Netherlands at an average of 2.479/kWh.
                 It also represents a monthly energy value of
-                **<span style="background-color:yellow">{0.7 * total_energy_output}</span>**
+                **<span style="background-color:#FFBF00">{0.7 * total_energy_output}</span>**
                 Euro, at an average of
-                **<span style="background-color:yellow">{0.7* average_energy_output}</span>**
+                **<span style="background-color:#FFBF00">{0.7* average_energy_output}</span>**
                 Euro per panel constellation.""", unsafe_allow_html=True)
 
     with st.expander(f"Distribution energy production panels"):
@@ -96,6 +97,12 @@ with st.sidebar.expander(f"What is deep learning?"):
 
 with st.sidebar.expander(f"How I can buy this data?"):
         st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
+
+with st.sidebar.expander(f"Info for nerds"):
+        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
+        Mean Average Precision (mAP) cross-continent = +70 """)
+        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
+        Mean Average Precision (mAP) cross-continent = +70 """)
 
 with st.sidebar.expander(f"Team"):
         st.write("""Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
