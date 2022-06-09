@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pydeck as pdk
 import numpy as np
 import json
-from deep_pv_frontend.utils.processing import predict_to_map
+from deep_pv_frontend.utils.processing import predict_to_map, plotly_map
 import plotly.figure_factory as ff
 import requests
 import seaborn as sns
@@ -22,11 +22,7 @@ with open("first_try.json") as jsonFile:
     jsonFile.close()
 preloaded = jsonObject
 
-def display_data(results = preloaded):
-    results = results['results']
-    map = predict_to_map(results)
-    st.pydeck_chart(map)
-
+def display_data(results):
     df = pd.DataFrame(results)
     table_df = df[['name','lat', 'lon', 'area_correction', 'kWh_mon']]
     total_energy_output = df['kWh_mon'].sum().round()
@@ -65,8 +61,10 @@ def display_data(results = preloaded):
 
 def get_custom_data():
     response = requests.get(url, params=params).json()
-    # response = preloaded
-    display_data(response)
+    results = response['results']
+    map = predict_to_map(results)
+    st.pydeck_chart(map)
+    display_data(results)
 
 def interactive_map():
     st.map()
@@ -99,7 +97,10 @@ if option == 'Custom':
 
 elif option == 'Rotterdam':
     st.write("Solar panel data analysed from Rotterdam on 20km2 in June 2019")
-    display_data(results = preloaded)
+    results = preloaded['results']
+    st.plotly_chart(plotly_map(scores = results),use_container_width=False, sharing="streamlit")
+    display_data(results)
+
 
 with st.sidebar.expander(f"About"):
         st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.
