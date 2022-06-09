@@ -23,9 +23,6 @@ random_locations = [
 default_lon_lat = random.choice(random_locations)
 default_lat = default_lon_lat[0]
 default_lon = default_lon_lat[1]
-
-
-
 default_api = 'AIzaSyDPPv3PNUdHNn-zuxyLPiMABKUW8yoPoj'
 default_size = 3
 
@@ -92,14 +89,62 @@ option = st.selectbox(
      ('Custom', 'Rotterdam'))
 
 if option == 'Custom':
+
+    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 4])
+    cal = col1.button('Fresno (US)')
+    unk = col2.button('Ketton (UK)')
+    rot = col3.button('Rotterdam (NL)')
+    mex = col4.button('CDMX (MX)')
+
+
     col1, col2 = st.columns(2)
-    col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
     key = col1.text_input('API Key', default_api)
     size = col1.slider('Map Size', 1, 9, default_size)
+    col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
     kpi = col1.button('Find my Panels!')
     params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+
+    if cal:
+        cal = 0
+        latitude = '36.807816370788494'
+        longitude = '-119.78978954999349'
+        print("getting cali")
+        params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+        with st.spinner('We got Marcobot4000 looking in California! He is looking for panels'):
+            get_custom_data()
+            st.success('Done!')
+
+    if rot:
+        rot = 0
+        latitude = '51.95658225956649'
+        longitude = '4.472880279577454'
+        print("getting cali")
+        params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+        with st.spinner('We got Marcobot4000 looking in Rotterdam! He is looking for panels'):
+            get_custom_data()
+            st.success('Done!')
+
+    if unk:
+        unk = 0
+        latitude = '52.64414513320668'
+        longitude = '-0.5584604495359557'
+        print("getting cali")
+        params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+        with st.spinner('We got Marcobot4000 looking in Ketton! He is looking for panels..'):
+            get_custom_data()
+            st.success('Done!')
+
+    if mex:
+        mex = 0
+        latitude = '19.35054518303481'
+        longitude = '-99.19522683159232'
+        print("getting cali")
+        params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
+        with st.spinner('We got Marcobot4000 looking in Mexico City! He is looking for panels.'):
+            get_custom_data()
+            st.success('Done!')
 
     df = pd.DataFrame([[float(latitude), float(longitude)]],
      columns=['lat', 'lon'])
