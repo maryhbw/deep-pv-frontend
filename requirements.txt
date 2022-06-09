@@ -14,7 +14,6 @@ streamlit
 requests
 matplotlib
 pydeck
-json
 plotly
 seaborn
 

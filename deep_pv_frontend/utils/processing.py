@@ -68,6 +68,7 @@ def plotly_map(scores):
     center = {'lat': midpoint[0],'lon':midpoint[1]}
     fig = px.density_mapbox(scores, lat='lat', lon='lon', z='count',
                         mapbox_style="carto-positron", center = center, zoom = 17, width = 100)
+    fig.update_layout(width=1100,height=700)
 #use groupby to transform data from wide to short for heatmap application
     return fig
 def make_results(scores):
