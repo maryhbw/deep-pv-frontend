@@ -13,6 +13,7 @@ API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 default_lat = '51.927682071121296'
 default_lon = '4.46474167449461'
+default_size = 3
 
 
 #preloaded data
@@ -52,8 +53,8 @@ def display_data(results = preloaded):
         st.dataframe(table_df)
 
 def get_custom_data():
-    # response = requests.get(url, params=params)
-    response = preloaded
+    response = requests.get(url, params=params).json()
+    # response = preloaded
     display_data(response)
 
 def interactive_map():
@@ -74,8 +75,9 @@ if option == 'Custom':
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
     key = col1.text_input('API Key')
+    size = col1.slider('Map Size', 1, 9, default_size)
     kpi = col1.button('Generate KPIs')
-    params = {'latitude':latitude, 'longitude':longitude, 'key': key}
+    params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
 
     df = pd.DataFrame([[float(latitude), float(longitude)]],
      columns=['lat', 'lon'])
@@ -99,9 +101,7 @@ with st.sidebar.expander(f"How I can buy this data?"):
         st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
 
 with st.sidebar.expander(f"Info for nerds"):
-        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
-        Mean Average Precision (mAP) cross-continent = +70 """)
-        st.write("""A [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
+        st.write("""An [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
         Mean Average Precision (mAP) cross-continent = +70 """)
 
 with st.sidebar.expander(f"Team"):
