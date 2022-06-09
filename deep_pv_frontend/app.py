@@ -12,8 +12,15 @@ import seaborn as sns
 st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
+
+
+random_locations = [('36.807816370788494', '-119.78978954999349'), ('37.67754438383909', '-121.0097469608227'), ('37.6875054437373', '-120.99656446426388'), ('-43.136158613674525', '147.85198462039867')]
+
 default_lat = '36.807816370788494'
 default_lon = '-119.78978954999349'
+
+
+default_api = 'AIzaSyDPPv3PNUdHNn-zuxyLPiMABKUW8yoPoj'
 default_size = 3
 
 #preloaded data
@@ -83,7 +90,7 @@ if option == 'Custom':
     col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
-    key = col1.text_input('API Key')
+    key = col1.text_input('API Key', default_api)
     size = col1.slider('Map Size', 1, 9, default_size)
     kpi = col1.button('Generate KPIs')
     params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
@@ -98,9 +105,9 @@ if option == 'Custom':
 elif option == 'Rotterdam':
     st.write("Solar panel data analysed from Rotterdam on 20km2 in June 2019")
     results = preloaded['results']
-    st.plotly_chart(plotly_map(scores = results),use_container_width=False, sharing="streamlit")
+    map = plotly_map(scores = results)
+    st.plotly_chart(map, use_container_width=True, sharing="streamlit")
     display_data(results)
-
 
 with st.sidebar.expander(f"About"):
         st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.

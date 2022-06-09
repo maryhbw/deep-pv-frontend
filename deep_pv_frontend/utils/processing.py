@@ -9,7 +9,6 @@ def make_map(bbs, points):
     # Adding code so we can have map default to the center of the data
     bbs = pd.DataFrame(bbs)
     points = pd.DataFrame(points)
-    print(points)
     midpoint = (np.average(points.lat), np.average(points.lon))
 
     initial_view_state=pdk.ViewState(
@@ -32,7 +31,6 @@ def make_map(bbs, points):
         )
 
     points['pointsize'] = points['area'] / 10
-
     layer2 = pdk.Layer(
                 'ScatterplotLayer',
                 data=points,
@@ -42,12 +40,10 @@ def make_map(bbs, points):
                 stroked=True,
                 pickable=True
                 )
-
     #Create labeled map
     labeled_map = pdk.Deck(layers=[layer1],
                            initial_view_state=initial_view_state,
                            map_style='mapbox://styles/mapbox/satellite-v9')
-    labeled_map.to_html('test.html')
     return labeled_map
 
 def scores_to_points(scores):
@@ -66,12 +62,12 @@ def scores_to_bb(scores):
         } for s in scores ]
 
 def plotly_map(scores):
-    scores = pd.DataFrame(scores['results'])
+    scores = pd.DataFrame(scores)
     scores['count'] = 1
     midpoint = (np.average(scores['lat']), np.average(scores['lon']))
     center = {'lat': midpoint[0],'lon':midpoint[1]}
     fig = px.density_mapbox(scores, lat='lat', lon='lon', z='count',
-                        mapbox_style="stamen-terrain", center = center, zoom = 12)
+                        mapbox_style="carto-positron", center = center, zoom = 17, width = 100)
 #use groupby to transform data from wide to short for heatmap application
     return fig
 def make_results(scores):
