@@ -61,6 +61,38 @@ def scores_to_bb(scores):
         'confidence': s['score']
         } for s in scores ]
 
+def heatmap(scores):
+    scores = pd.DataFrame(scores)
+
+    COLOR_BREWER_BLUE_SCALE = [
+        [240, 249, 232],
+        [204, 235, 197],
+        [168, 221, 181],
+        [123, 204, 196],
+        [67, 162, 202],
+        [8, 104, 172],
+    ]
+
+    heatmap = pdk.Layer(
+    "HeatmapLayer",
+    data=cattle_df,
+    opacity=0.9,
+    get_position=["lon", "lat"],
+    aggregation=pdk.types.String("MEAN"),
+    color_range=COLOR_BREWER_BLUE_SCALE,
+    threshold=1,
+    get_weight="weight",
+    pickable=True,
+    )
+
+    map = pdk.Deck(
+    layers=[heatmap],
+    initial_view_state=view,
+    map_provider="mapbox",
+    map_style=pdk.map_styles.SATELLITE,
+    tooltip={"text": "Concentration of cattle in blue, concentration of poultry in orange"},
+    )
+
 def plotly_map(scores):
     scores = pd.DataFrame(scores)
     scores['count'] = 1
