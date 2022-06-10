@@ -10,7 +10,7 @@ import requests
 import seaborn as sns
 import random
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 
@@ -23,7 +23,7 @@ random_locations = [
 default_lon_lat = random.choice(random_locations)
 default_lat = default_lon_lat[0]
 default_lon = default_lon_lat[1]
-default_api = 'AIzaSyDPPv3PNUdHNn-zuxyLPiMABKUW8yoPoj'
+key = 'AIzaSyDPPv3PNUdHNn-zuxyLPiMABKUW8yoPojc'
 default_size = 3
 
 #preloaded data
@@ -99,7 +99,7 @@ if option == 'Custom':
     col1, col2 = st.columns(2)
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
-    key = col1.text_input('API Key', default_api)
+    # key = col1.text_input('API Key', default_api)
     size = col1.slider('Map Size', 1, 9, default_size)
     col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
     kpi = col1.button('Find my Panels!')
@@ -161,13 +161,13 @@ elif option == 'Rotterdam':
     st.plotly_chart(map, use_container_width=True, sharing="streamlit")
     display_data(results)
 
-with st.sidebar.expander(f"About"):
-        st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.
-                 """)
+# with st.sidebar.expander(f"About"):
+#         st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.
+#                  """)
 
-with st.sidebar.expander(f"Info for nerds"):
-        st.write("""An [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
-        Mean Average Precision (mAP) cross-continent = +70 """)
+# with st.sidebar.expander(f"Info for nerds"):
+#         st.write("""An [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
+#         Mean Average Precision (mAP) cross-continent = +70 """)
 
-with st.sidebar.expander(f"Team"):
-        st.write("""Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
+# with st.sidebar.expander(f"Team"):
+#         st.write("""Project team: Toby Winter, Mary Ward, Marco Rodriguez, Ivan Thung""")
