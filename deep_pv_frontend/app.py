@@ -96,7 +96,6 @@ if option == 'Custom':
     rot = col3.button('Rotterdam (NL)')
     mex = col4.button('CDMX (MX)')
 
-
     col1, col2 = st.columns(2)
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
@@ -120,7 +119,7 @@ if option == 'Custom':
         rot = 0
         latitude = '51.95658225956649'
         longitude = '4.472880279577454'
-        print("getting cali")
+        print("getting rotterdam")
         params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
         with st.spinner('We got Marcobot4000 looking in Rotterdam! He is looking for panels'):
             get_custom_data()
@@ -130,7 +129,7 @@ if option == 'Custom':
         unk = 0
         latitude = '52.64414513320668'
         longitude = '-0.5584604495359557'
-        print("getting cali")
+        print("getting ketton")
         params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
         with st.spinner('We got Marcobot4000 looking in Ketton! He is looking for panels..'):
             get_custom_data()
@@ -140,7 +139,7 @@ if option == 'Custom':
         mex = 0
         latitude = '19.35054518303481'
         longitude = '-99.19522683159232'
-        print("getting cali")
+        print("getting mexico")
         params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
         with st.spinner('We got Marcobot4000 looking in Mexico City! He is looking for panels.'):
             get_custom_data()
@@ -165,12 +164,6 @@ elif option == 'Rotterdam':
 with st.sidebar.expander(f"About"):
         st.write("""This project uses deep learning to identify and quantify solar panels anywhere in the world. It uses a Multi-Region Convolutional Neural Network (MRCNN) architecture trained on images in California and China.
                  """)
-
-with st.sidebar.expander(f"What is deep learning?"):
-        st.write("""How should we know? We just followed the notebook!""")
-
-with st.sidebar.expander(f"How I can buy this data?"):
-        st.write("""Drop some cash at the LeWagon office. New dollar bills only plz.""")
 
 with st.sidebar.expander(f"Info for nerds"):
         st.write("""An [MRCNN](https://github.com/matterport/Mask_RCNN) model was trained on an open source [California](https://www.nature.com/articles/sdata2016106) and [china](https://essd.copernicus.org/preprints/essd-2021-270/essd-2021-270.pdf) data set. All files were tiled in tiles of 256x256, with annotations in the [COCO format](https://cocodataset.org/#home). Mean Average Precision after training about 4000 tiles with 100 epochs reached (mAP) in-city = 90+
