@@ -14,9 +14,6 @@ import random
 API_PATH = 'https://deepcloud-vpmy6xoida-ew.a.run.app'
 url = f'{API_PATH}/hood?'
 
-
-
-
 random_locations = [
     ('36.807816370788494', '-119.78978954999349'),
     ('37.67754438383909', '-121.0097469608227'),
@@ -27,7 +24,7 @@ default_lon_lat = random.choice(random_locations)
 default_lat = default_lon_lat[0]
 default_lon = default_lon_lat[1]
 key = 'AIzaSyDPPv3PNUdHNn-zuxyLPiMABKUW8yoPojc'
-default_size = 3
+default_size = 2
 
 #preloaded data
 with open("first_try.json") as jsonFile:
@@ -108,7 +105,7 @@ if option == 'Custom':
     latitude = col1.text_input('latitude', default_lat)
     longitude = col1.text_input('longitude', default_lon)
     # key = col1.text_input('API Key', default_api)
-    size = col1.slider('Map Size', 1, 9, default_size)
+    size = col1.slider('Map Size', 1, 5, default_size)
     col1.write("To make a prediction, select a location and we'll calculate your KPIs!")
     kpi = col1.button('Find my Panels!')
     params = {'latitude':latitude, 'longitude':longitude, 'key': key, 'size':size}
